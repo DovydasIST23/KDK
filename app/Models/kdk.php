@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class kdk extends Model
 {
-    protected $fillable = ['name', 'price', 'description', 'image', 'kdk_tipas_id', 'kdk_gamintojas_id'];
+    protected $fillable = ['name','kdk_gamintojas_id', 'kdk_tipas_id','kiekis', 'aprasas', 'kaina'  ];
 
     public function kdk_tipas()
     {
