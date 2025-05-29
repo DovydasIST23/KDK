@@ -47,14 +47,15 @@ class KDKController extends Controller
         $kdk = kdk::findOrFail($id); // Corrected
         $gamintojai = kdk_gamintojas::all();
         $tipai = kdk_tipas::all();
-        return view('Katalogas.create', compact('kdk', 'gamintojai', 'tipai'));
+        return view('Katalogas.create', compact('kdk'));
     }
 
-    public function destroy(kdk $kdk)
-    {
-        $kdk->delete();
-        return redirect()->route('Katalogas.index')->with('success', 'Contact deleted successfully!');
-    }
+    public function destroy($id)
+{
+    $kdk = kdk::findOrFail($id);
+    $kdk->delete();
+    return redirect()->route('Katalogas.index')->with('success', 'Įrašas ištrintas!');
+}
 
 
     public function trashed()
@@ -77,4 +78,14 @@ class KDKController extends Controller
         kdk::withTrashed()->findOrFail($id)->forceDelete();
         return redirect()->route('Katalogas.trashed')->with('success', 'Kontaktas visam laikui pašalintas.');
     }
+
+    public function show($id)
+    {
+        // Find the KDK item by ID
+        $kdk = kdk::findOrFail($id);
+        
+        // Return a view with the KDK item
+        return view('Katalogas.show', compact('kdk'));
+    }
+
 }

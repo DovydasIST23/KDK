@@ -5,7 +5,7 @@
 @section('content')
     <div class="container mt-4">
         <div class="d-flex justify-content-between align-items-center mb-3">
-            <h2>Ištrinti kontaktai</h2>
+            <h2 style="font-size:200%">Ištrinti kontaktai</h2>
             <a href="{{ route('Katalogas.index') }}" class="btn btn-primary">Grįžti į studentų sąrašą</a>
         </div>
 
@@ -16,26 +16,26 @@
         <table class="table table-striped table-bordered table-hover">
             <thead class="thead-dark">
                 <tr>
-                    <th>ID</th>
-                    <th>Pavadinimas</th>
-                    <th>Gamintojas</th>
-                    <th>Tipas</th>
-                    <th>Kiekis</th>
-                    <th>Aprasas</th>
-                    <th>Kaina</th>
+                    <th style="border: 1px solid black; padding: 5px;">ID</th>
+                    <th style="border: 1px solid black; padding: 5px;">Pavadinimas</th>
+                    <th style="border: 1px solid black; padding: 5px;">Gamintojas</th>
+                    <th style="border: 1px solid black; padding: 5px;">Tipas</th>
+                    <th style="border: 1px solid black; padding: 5px;">Kiekis</th>
+                    <th style="border: 1px solid black; padding: 5px;">Aprasas</th>
+                    <th style="border: 1px solid black; padding: 5px;">Kaina</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($kdks as $kdk)
                     <tr>
-                        <td>{{ $kdk->id }}</td>
-                        <td>{{ $kdk->name }}</td>
-                        <td>{{ $kdk->gamintojas_id }}</td>
-                        <td>{{ $kdk->tipas_id }}</td>
-                        <td>{{ $kdk->kiekis }}</td>
-                        <td>{{ $kdk->aprasas }}</td>
-                        <td>{{ $kdk->kaina }}</td>
-                        <td>
+                        <td style="border: 1px solid black; padding: 5px;">{{ $kdk->id }}</td>
+                        <td style="border: 1px solid black; padding: 5px;">{{ $kdk->name }}</td>
+                        <td style="border: 1px solid black; padding: 5px;">{{ $kdk->gamintojas_id }}</td>
+                        <td style="border: 1px solid black; padding: 5px;">{{ $kdk->tipas_id }}</td>
+                        <td style="border: 1px solid black; padding: 5px;">{{ $kdk->kiekis }}</td>
+                        <td style="border: 1px solid black; padding: 5px;">{{ $kdk->aprasas }}</td>
+                        <td style="border: 1px solid black; padding: 5px;">{{ $kdk->kaina }}</td>
+                        <td style="border: 1px solid black; padding: 5px;">
                             <form action="{{ route('Katalogas.restore', $kdk->id) }}" method="POST" class="d-inline">
                                 @csrf
                                 <button type="submit" class="btn btn-success btn-sm">Atkurti</button>

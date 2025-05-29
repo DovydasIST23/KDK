@@ -27,6 +27,6 @@ public function up(): void
      */
     public function down(): void
     {
-          Schema::dropIfExists('kdk_tipas');
+          //Schema::dropIfExists('kdk_tipas');
     }
 };

@@ -11,16 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('kdks', function (Blueprint $table) {
-             $table->id();
-            $table->string('name');
-            $table->foreignId('tipas_id')->references('id')->on('kdk_tipas');
-            $table->foreignId('gamintojas_id')->references('id')->on('kdk_gamintojas');
-            $table->integer('kiekis'); 
-            $table->text('aprasas');
-            $table->decimal('kaina', 10, 2); // Define a decimal column named 'kaina'
-            $table->timestamps();
-        });
+       Schema::create('kdks', function (Blueprint $table) {
+    $table->id();
+    $table->string('name');
+    $table->unsignedBigInteger('gamintojas_id')->nullable();
+    $table->unsignedBigInteger('tipas_id')->nullable();
+    $table->integer('kiekis');
+    $table->text('aprasas');
+    $table->decimal('kaina', 8, 2);
+    $table->softDeletes();
+    $table->timestamps();
+
+    $table->foreign('gamintojas_id')->references('id')->on('kdk_gamintojas')->onDelete('set null');
+    $table->foreign('tipas_id')->references('id')->on('kdk_tipas')->onDelete('set null');
+});
+
     }
 
     /**
