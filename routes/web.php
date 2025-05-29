@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Models\kdk;
 use App\Http\Controllers\KDKController;
+use App\Http\Controllers\PDFController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -45,5 +47,7 @@ Route::prefix('Katalogas')->group(function () {
     // Route to force delete a Katalogas entry
     Route::delete('/{id}/forceDelete', [KDKController::class, 'forceDelete'])->middleware('auth')->name('Katalogas.forceDelete');
 });
+
+Route::get('/generate-pdf', [PDFController::class, 'generatePDF']);
 
 

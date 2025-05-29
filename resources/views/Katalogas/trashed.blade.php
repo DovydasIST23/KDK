@@ -6,7 +6,7 @@
     <div class="container mt-4">
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h2 style="font-size:200%">Ištrinti kontaktai</h2>
-            <a href="{{ route('Katalogas.index') }}" class="btn btn-primary">Grįžti į studentų sąrašą</a>
+            <a href="{{ route('Katalogas.index') }}" class="btn btn-primary">Grįžti į studentų sąrašą</a><br>
         </div>
 
         @if (session('success'))
@@ -23,6 +23,7 @@
                     <th style="border: 1px solid black; padding: 5px;">Kiekis</th>
                     <th style="border: 1px solid black; padding: 5px;">Aprasas</th>
                     <th style="border: 1px solid black; padding: 5px;">Kaina</th>
+                    <th style="border: 1px solid black; padding: 5px;">Veiksmai</th>
                 </tr>
             </thead>
             <tbody>
@@ -38,10 +39,10 @@
                         <td style="border: 1px solid black; padding: 5px;">
                             <form action="{{ route('Katalogas.restore', $kdk->id) }}" method="POST" class="d-inline">
                                 @csrf
-                                <button type="submit" class="btn btn-success btn-sm">Atkurti</button>
+                                <button type="submit" style="color:lime" class="btn btn-success btn-sm">Atkurti</button>
                             </form>
 
-                            <form action="{{ route('Katalogas.forceDelete', $kdk->id) }}" method="POST" class="d-inline">
+                            <form action="{{ route('Katalogas.forceDelete', $kdk->id) }}"  style="color:red" method="POST" class="d-inline">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Ar tikrai norite visiškai ištrinti?')">Ištrinti visam laikui</button>
