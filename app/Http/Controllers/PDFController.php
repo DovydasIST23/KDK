@@ -9,13 +9,11 @@ class PDFController extends Controller
 {
     public function generatePDF()
     {
+        $Katalogas = \App\Models\kdk::with(['kdk_gamintojas', 'kdk_tipas'])->get();
         $data = [
-            'title' => 'PDF Dokumento Pavadinimas',
-            'date' => date('Y-m-d'),
-            'content' => 'Tai yra sugeneruotas PDF dokumentas Laravel 10+ versijoje.'
+            'Katalogas' => $Katalogas,
         ];
-
-        $pdf = Pdf::loadView('pdf.document', $data);
-        return $pdf->download('dokumentas.pdf'); // arba stream() jei norite rodyti naršyklėje
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('Katalogas.pdf', $data);
+        return $pdf->download('Detaliu_katalogas.pdf');
     }
 }

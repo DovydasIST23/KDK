@@ -4,13 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\kdk_gamintojas;
 use App\Models\kdk_tipas;
 
 class kdk extends Model
 {
-    protected $fillable = ['name','gamintojas_id', 'tipas_id','kiekis', 'aprasas', 'kaina'  ];
+    use HasFactory;
     use SoftDeletes; // Naudojame SoftDeletes
+
+    protected $fillable = ['name','gamintojas_id', 'tipas_id','kiekis', 'aprasas', 'kaina'  ];
     protected $dates = ['deleted_at'];
 
     public function kdk_tipas()

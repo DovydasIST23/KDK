@@ -14,7 +14,7 @@
     <div class="header">{{ $title }}</div>
     <div class="content">
         <p>Data: {{ $date }}</p>
-        <p>{{ $content }}</p>
+        <p>{{ $Katalogas }}</p>
     </div>
 </body>
 </html>

@@ -1,10 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Mail;
 use App\Models\kdk;
 use App\Http\Controllers\KDKController;
 use App\Http\Controllers\PDFController;
-
+use App\Http\Controllers\MailController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -19,6 +20,7 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
+
 Route::prefix('Katalogas')->group(function () {
     // Route to display the index of Katalogas
     Route::get('/', [KDKController::class, 'index'])->name('Katalogas.index');
@@ -46,8 +48,33 @@ Route::prefix('Katalogas')->group(function () {
 
     // Route to force delete a Katalogas entry
     Route::delete('/{id}/forceDelete', [KDKController::class, 'forceDelete'])->middleware('auth')->name('Katalogas.forceDelete');
+    
+    // Route to search Katalogas entries
+    Route::get('/search', [KDKController::class, 'search'])->name('Katalogas.search');
+    
+    // Route to display the report page
+    Route::get('/ataskaita', [KDKController::class, 'ataskaita'])->name('Katalogas.ataskaita');
+
+    // Route to generate PDF
+    Route::get('/generate-pdf', [PDFController::class, 'generatePDF']);
+
+    // Route to display the form submission page
+    Route::post('/submit-form', [MailController::class, 'submit'])->name('Katalogas.mail');
+
+    // Route to display 
+    Route::get('/{id}', [KDKController::class, 'show'])->name('Katalogas.show');
+
+    
 });
 
-Route::get('/generate-pdf', [PDFController::class, 'generatePDF']);
+Route::get('/test-mail', function () {
+    Mail::raw('Test email from KDK app.', function ($message) {
+        $message->to('your@email.com')
+                ->subject('Test Email');
+    });
+    return 'Mail sent!';
+});
+
+
 
 

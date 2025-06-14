@@ -13,7 +13,8 @@ class KDKController extends Controller
     public function index()
     {
         $Katalogas = kdk::paginate(10); // Fetch 10 records per page
-        return view('Katalogas.index', compact('Katalogas'));
+        $results = null;
+        return view('Katalogas.index', compact('Katalogas', 'results'));
     }
 
 
@@ -27,17 +28,18 @@ class KDKController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string',
-            'kiekis' => 'required|integer',
-            'aprasas' => 'required|string',
-            'kaina' => 'required|numeric',
-            'gamintojas_id' => 'required|exists:kdk_gamintojas,id',
-            'tipas_id' => 'required|exists:kdk_tipas,id'
-        ]);
-
-
-        kdk::create($request->only('name', 'kiekis', 'aprasas', 'kaina', 'gamintojas_id', 'tipas_id'));
+      /*
+        // gaudo ERROR kai neprideda
+        \Log::info('Store called', $request->all());
+        try {
+*/
+            kdk::create($request->only('name', 'kiekis', 'aprasas', 'kaina', 'gamintojas_id', 'tipas_id'));
+          /*
+            \Log::info('Create success');
+        } catch (\Exception $e) {
+            \Log::error('Create failed: ' . $e->getMessage());
+        }
+           */ 
         return redirect()->route('Katalogas.index')->with('success', 'Detale prideta sėkmingai!');
     }
 
@@ -47,7 +49,7 @@ class KDKController extends Controller
         $kdk = kdk::findOrFail($id); // Corrected
         $gamintojai = kdk_gamintojas::all();
         $tipai = kdk_tipas::all();
-        return view('Katalogas.create', compact('kdk'));
+        return view('Katalogas.create', compact('kdk', 'gamintojai', 'tipai'));
     }
 
     public function destroy($id)
@@ -69,23 +71,51 @@ class KDKController extends Controller
     public function restore($id)
     {
         kdk::withTrashed()->findOrFail($id)->restore();
-        return redirect()->route('Katalogas.trashed')->with('success', 'Kontaktas atkurtas!');
+        return redirect()->route('Katalogas.trashed')->with('success', 'Detale atkurta!');
     }
 
 
     public function forceDelete($id)
     {
         kdk::withTrashed()->findOrFail($id)->forceDelete();
-        return redirect()->route('Katalogas.trashed')->with('success', 'Kontaktas visam laikui pašalintas.');
+        return redirect()->route('Katalogas.trashed')->with('success', 'Detale visam laikui pašalinta.');
     }
 
     public function show($id)
     {
         // Find the KDK item by ID
         $kdk = kdk::findOrFail($id);
-        
         // Return a view with the KDK item
         return view('Katalogas.show', compact('kdk'));
+
+    }
+
+    public function ataskaita()
+    {
+        // This method can be used to display a form for generating reports or PDFs
+        $Katalogas = \App\Models\kdk::with(['kdk_gamintojas', 'kdk_tipas'])->get();
+        $kdk_gamintojas = kdk_gamintojas::all();
+        $kdk_tipas = kdk_tipas::all();
+        return view('Katalogas.ataskaita', compact('Katalogas', 'kdk_gamintojas', 'kdk_tipas'));
+    }
+
+        public function search(Request $request)
+    {
+        $query = $request->input('query');
+
+        $results = Kdk::with(['kdk_gamintojas', 'kdk_tipas'])
+            ->where('name', 'like', "%$query%")
+            ->orWhereHas('kdk_gamintojas', function ($q) use ($query) {
+                $q->where('Gname', 'like', "%$query%");
+            })
+            ->orWhereHas('kdk_tipas', function ($q) use ($query) {
+                $q->where('tipas', 'like', "%$query%");
+            })
+            ->get();
+
+            $Katalogas = kdk::with(['kdk_gamintojas', 'kdk_tipas'])->paginate(10);
+
+        return view('Katalogas.search', compact('results',));
     }
 
 }
