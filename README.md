@@ -60,10 +60,3 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
-
-# temp code
-public function show($id)
-{
-    // You can redirect or show a view, depending on your needs
-    return redirect()->route('Katalogas.index');
-}

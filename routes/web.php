@@ -60,20 +60,16 @@ Route::prefix('Katalogas')->group(function () {
 
     // Route to display the form submission page
     Route::post('/submit-form', [MailController::class, 'submit'])->name('Katalogas.mail');
+    Route::get('/submit-form', function () {return view('Katalogas.mail'); })->name('Katalogas.mail.form');
 
     // Route to display 
     Route::get('/{id}', [KDKController::class, 'show'])->name('Katalogas.show');
 
+    // Route to display the form submission page
+    //Route::post('/submit-form', [MailController::class, 'submit'])->name('Katalogas.form');
     
 });
 
-Route::get('/test-mail', function () {
-    Mail::raw('Test email from KDK app.', function ($message) {
-        $message->to('your@email.com')
-                ->subject('Test Email');
-    });
-    return 'Mail sent!';
-});
 
 
 

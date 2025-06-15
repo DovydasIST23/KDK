@@ -22,6 +22,6 @@ class FormSubmissionMail extends Mailable
     {
         return $this->from(config('mail.from.address'))
                     ->subject('Formos užpildymo kopija')
-                    ->text('emails.form_submission'); // Naudojame „plain text“ šabloną
+                    ->text('emails.Part_List'); // Naudojame „plain text“ šabloną
     }
 }

@@ -18,7 +18,7 @@
         <div style="color: green; padding: 5px;">{{ session('success') }}</div>
     @endif
 
-    <table class="table table-striped" style="border-collapse: collapse; border: 2px solid black;  margin-left: auto; margin-right: auto; width: 100%; text-align: center; background-color: #f9f9f9;">
+    <table class="table table-striped" style="border-collapse: collapse; border: 2px solid black; margin-left: auto; margin-right: auto; width: 100%; text-align: center; background-color: #f9f9f9;">
         <thead>
             <tr>
                 <th style="border: 1px solid black; padding: 5px;">ID</th>

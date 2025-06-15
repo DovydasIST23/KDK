@@ -29,6 +29,9 @@
     <!-- PDF Generation Button -->
     <a href="{{ url('/Katalogas/generate-pdf') }}" class="btn btn-primary" style="margin-bottom: 30px; border: 1px solid black; padding: 5px;">
         Generuoti PDF
+    </a>&emsp;
+    <a href="{{ url('/Katalogas/submit-form') }}" class="btn btn-primary" style="margin-bottom: 30px; border: 1px solid black; padding: 5px;">
+        Siusti generuota PDF i pasta
     </a>
 <!-- Chart.js Graph -->
     <div style="background:#b48cee; border-radius:8px; padding:20px; box-shadow:0 2px 8px #0001; margin-bottom:30px; margin-top:30px;">

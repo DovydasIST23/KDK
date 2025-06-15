@@ -15,6 +15,6 @@ class PartSeeder extends Seeder
      */
     public function run(): void
     {
-        kdk::factory()->count(100)->create();
+        kdk::factory()->count(20)->create();
     }
 }

@@ -12,7 +12,7 @@ class KDKController extends Controller
 {
     public function index()
     {
-        $Katalogas = kdk::paginate(10); // Fetch 10 records per page
+        $Katalogas = kdk::paginate(10);
         $results = null;
         return view('Katalogas.index', compact('Katalogas', 'results'));
     }
@@ -28,11 +28,11 @@ class KDKController extends Controller
 
     public function store(Request $request)
     {
-      /*
+        /*
         // gaudo ERROR kai neprideda
         \Log::info('Store called', $request->all());
         try {
-*/
+        */
             kdk::create($request->only('name', 'kiekis', 'aprasas', 'kaina', 'gamintojas_id', 'tipas_id'));
           /*
             \Log::info('Create success');
@@ -46,18 +46,36 @@ class KDKController extends Controller
 
     public function edit($id)
     {
-        $kdk = kdk::findOrFail($id); // Corrected
-        $gamintojai = kdk_gamintojas::all();
-        $tipai = kdk_tipas::all();
-        return view('Katalogas.create', compact('kdk', 'gamintojai', 'tipai'));
+    $kdk = kdk::findOrFail($id);
+    $gamintojai = \App\Models\kdk_gamintojas::all();
+    $tipai = \App\Models\kdk_tipas::all();
+    return view('Katalogas.create', compact('kdk', 'gamintojai', 'tipai'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required|string',
+            'gamintojas_id' => 'required|exists:kdk_gamintojas,id',
+            'tipas_id' => 'required|exists:kdk_tipas,id',
+            'kiekis' => 'required|integer',
+            'aprasas' => 'required|string',
+            'kaina' => 'required|numeric'
+            
+        ]);
+
+        $kdk = kdk::findOrFail($id);
+        $kdk->update($request->only('name', 'gamintojas_id', 'tipas_id', 'kiekis', 'aprasas', 'kaina'));
+
+        return redirect()->route('Katalogas.index')->with('success', 'Detale sėkmingai atnaujinta!');
     }
 
     public function destroy($id)
-{
+    {
     $kdk = kdk::findOrFail($id);
     $kdk->delete();
     return redirect()->route('Katalogas.index')->with('success', 'Įrašas ištrintas!');
-}
+    }
 
 
     public function trashed()
